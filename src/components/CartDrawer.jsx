@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Trash2, ShoppingBag } from 'lucide-react';
 
-export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem }) {
+export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, onCheckout }) {
   // Calculates cumulative sum values
   const totalPrice = cartItems.reduce((acc, item) => {
     const numericalPrice = parseFloat(item.price.replace('$', ''));
@@ -91,7 +91,10 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem })
               Taxes and shipping fees calculated at settlement step entry parameters.
             </p>
 
-            <button className="w-full py-3 bg-coffee-accent hover:bg-coffee-accent/90 text-coffee-darkest font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg cursor-pointer border-none focus:outline-none">
+            <button 
+              onClick={onCheckout}
+              className="w-full py-3 bg-coffee-accent hover:bg-coffee-accent/90 text-coffee-darkest font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg cursor-pointer border-none focus:outline-none"
+            >
               Proceed To Settlement
             </button>
           </div>

@@ -1,93 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Coffee, Menu, X } from 'lucide-react';
+import React from 'react';
+import { Coffee, ShoppingBag, ShieldAlert } from 'lucide-react';
 
-export default function Navbar({ cartCount, onCartOpen }) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+export default function Navbar({ cartCount, onCartOpen, onAdminOpen }) {
   return (
-    <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-coffee-darkest/90 backdrop-blur-md py-3 shadow-lg' : 'bg-transparent py-5'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* LOGO SELECTION */}
-            <div className="flex-shrink-0 flex items-center space-x-2">
-              <Coffee className="h-6 w-6 text-coffee-accent animate-pulse" />
-              <span className="text-xl font-bold tracking-widest text-[#fff] uppercase font-serif">
-                Murk<span className="text-coffee-accent">.</span>
-              </span>
-            </div>
-
-            {/* DESKTOP NAVIGATION LINKS */}
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-xs uppercase tracking-[0.2em] text-white/90 hover:text-coffee-accent transition-colors">Home</a>
-              <a href="#collection" className="text-xs uppercase tracking-[0.2em] text-white/70 hover:text-coffee-accent transition-colors">Collection</a>
-              <a href="#menu" className="text-xs uppercase tracking-[0.2em] text-white/70 hover:text-coffee-accent transition-colors">Menu</a>
-              <a href="#blog" className="text-xs uppercase tracking-[0.2em] text-white/70 hover:text-coffee-accent transition-colors">Blog</a>
-              <a href="#contact" className="text-xs uppercase tracking-[0.2em] text-white/70 hover:text-coffee-accent transition-colors">Contact</a>
-            </div>
-
-            {/* ACTION TRIGGERS */}
-            <div className="hidden md:flex items-center space-x-4">
-              <button 
-                onClick={onCartOpen}
-                className="p-2 text-white/80 hover:text-coffee-accent transition-colors relative bg-transparent border-none cursor-pointer"
-              >
-                <ShoppingBag size={18} />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-coffee-accent text-coffee-darkest text-[9px] font-bold flex items-center justify-center rounded-full animate-bounce">
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-              <button className="px-5 py-2.5 bg-coffee-accent hover:bg-coffee-accent/90 text-coffee-darkest text-xs font-bold uppercase tracking-wider rounded-full shadow-md transition-all transform hover:-translate-y-0.5 cursor-pointer">
-                Order Online
-              </button>
-            </div>
-
-            {/* MOBILE INTERFACE TRIGGER */}
-            <div className="md:hidden flex items-center space-x-4">
-              <button 
-                onClick={onCartOpen}
-                className="p-2 text-white/80 hover:text-coffee-accent relative bg-transparent border-none cursor-pointer"
-              >
-                <ShoppingBag size={18} />
-                {cartCount > 0 && (
-                  <span className="absolute top-0 right-0 w-2 h-2 bg-coffee-accent rounded-full"></span>
-                )}
-              </button>
-              <button onClick={() => setIsOpen(!isOpen)} className="text-white p-1 bg-transparent border-none cursor-pointer">
-                {isOpen ? <X size={22} /> : <Menu size={22} />}
-              </button>
-            </div>
-
-          </div>
+    <nav className="fixed top-0 left-0 right-0 z-40 bg-coffee-darkest/80 backdrop-blur-md border-b border-coffee-accent/5 py-4 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        
+        {/* BRAND IDENTITY */}
+        <div className="flex items-center space-x-2">
+          <Coffee className="h-5 w-5 text-coffee-accent" />
+          <span className="text-base font-bold tracking-widest uppercase font-serif">
+            Murk<span className="text-coffee-accent">.</span>
+          </span>
         </div>
-      </nav>
 
-      {/* MOBILE PANEL DRAWER */}
-      <div className={`fixed inset-0 w-full h-screen bg-coffee-darkest/98 z-40 flex flex-col items-center justify-center space-y-8 transition-transform duration-300 ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
-      } md:hidden`}>
-        <a href="#home" onClick={() => setIsOpen(false)} className="text-lg uppercase tracking-widest text-white">Home</a>
-        <a href="#collection" onClick={() => setIsOpen(false)} className="text-lg uppercase tracking-widest text-white/70">Collection</a>
-        <a href="#menu" onClick={() => setIsOpen(false)} className="text-lg uppercase tracking-widest text-white/70">Menu</a>
-        <a href="#contact" onClick={() => setIsOpen(false)} className="text-lg uppercase tracking-widest text-white/70">Contact</a>
-        <button className="px-8 py-3 bg-coffee-accent text-coffee-darkest text-sm font-bold uppercase tracking-wider rounded-full">
-          Order Online
-        </button>
+        {/* NAVIGATION LINKS */}
+        <div className="hidden md:flex space-x-8 text-xs uppercase tracking-widest font-light">
+          <a href="#home" className="hover:text-coffee-accent transition-colors">Home</a>
+          <a href="#collection" className="hover:text-coffee-accent transition-colors">Collections</a>
+          <a href="#menu" className="hover:text-coffee-accent transition-colors">Menu</a>
+          <a href="#blog" className="hover:text-coffee-accent transition-colors">Journal</a>
+          <a href="#contact" className="hover:text-coffee-accent transition-colors">Contact</a>
+        </div>
+
+        {/* INTERACTION ACTION CONTROLS */}
+        <div className="flex items-center space-x-4">
+          
+          {/* NEW: ADMIN PORTAL LINK */}
+          <button 
+            onClick={onAdminOpen}
+            title="Barista Panel Access"
+            className="p-2 text-white/60 hover:text-coffee-accent transition-colors relative bg-transparent border-none cursor-pointer group"
+          >
+            <ShieldAlert size={18} />
+            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-coffee-dark border border-coffee-accent/10 px-2 py-0.5 rounded text-[9px] uppercase tracking-wider text-coffee-cream opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              Staff Portal
+            </span>
+          </button>
+
+          {/* TRAY SHOPPING ICON */}
+          <button 
+            onClick={onCartOpen}
+            className="p-2 text-white hover:text-coffee-accent transition-all relative bg-transparent border-none cursor-pointer"
+          >
+            <ShoppingBag size={18} />
+            {cartCount > 0 && (
+              <span className="absolute top-0 right-0 bg-coffee-accent text-coffee-darkest font-mono text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center animate-pulse">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+        </div>
+
       </div>
-    </>
+    </nav>
   );
 }
