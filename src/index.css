@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  /* Coffee Theme Custom Colors */
+  --color-coffee-darkest: #140d09; /* Darkest background espresso shade */
+  --color-coffee-dark: #231610;    /* Card backgrounds / secondary layout blocks */
+  --color-coffee-cream: #d7beab;   /* Light latte text and borders */
+  --color-coffee-accent: #c49a6c;  /* Warm roasted caramel color for buttons/hovers */
+  --color-coffee-lightbg: #e6dcd3; /* Light beige for the product menu cards */
+
+  /* Theme Custom Fonts */
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", Inter, sans-serif;
+}
